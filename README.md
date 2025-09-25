@@ -109,3 +109,9 @@ Untuk mempermudah login saat development, plugin ini sudah aktif.
     **👉 [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)**
 
 Login menggunakan akun `super_admin` yang telah Anda buat pada langkah sebelumnya. Selamat bekerja\!
+
+hapus git 
+
+ ```bash
+Remove-Item -Recurse -Force .git
+    
