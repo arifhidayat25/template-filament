@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Widgets\StatsOverviewWidget;
+use Illuminate\Support\Facades\Schema;
 
 
 class AdminPanelProvider extends PanelProvider
@@ -59,17 +60,13 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugin(
-    \DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin::make()
-
-
-        ->enabled(app()->environment('local'))
-        ->users(
-            \App\Models\User::withoutGlobalScopes()
-                ->pluck('email', 'id')
-                ->toArray()
-        )
-)
-;
+            FilamentDeveloperLoginsPlugin::make()
+                    ->enabled(app()->environment('local'))
+                    ->users(fn () => Schema::hasTable('users')
+                        ? \App\Models\User::withoutGlobalScopes()->pluck('email', 'id')->toArray()
+                        : []
+                    ),
+            );
     }
 }
 
